@@ -44,7 +44,7 @@ try{
     const appointmentCollection  = database.collection('appointments');
     const usersCollection = database.collection('users')
 
-  app.get('/appointments',async(req,res)=>{
+  app.get('/appointments',verifyToken,async(req,res)=>{
     let query = {}
     const email = req.query.email;
     const date = new Date(req.query.date).toLocaleDateString();
@@ -55,7 +55,7 @@ try{
     res.send(appointments)
   })
 
-    app.post('/appointments', verifyToken,async(req,res)=>{
+    app.post('/appointments',async(req,res)=>{
       const appointment = req.body;
       const result = await appointmentCollection.insertOne(appointment)
       res.json(result)
